@@ -70,8 +70,7 @@ void drawField(){
 		printf("\033[%d;%dH", 41, 8 + 24 * n);
 		std::cout << "*************************";	
 	}
-	
-	
+
 }
 
 short int check(short** p)
@@ -161,10 +160,11 @@ int main()
 		switch (key_ASCII) {
 		case 10: // ASCII code of ENTER button
 			
-			allowed_step = 2;
-			if(XO_matrix[matrix_ind][K / 3][K % 3] != 0 && XO_matrix[matrix_ind][K / 3][K % 3] != 1){
-					
-				if(player == 1)
+			
+			if(XO_matrix[matrix_ind][K / 3][K % 3] != 0 && XO_matrix[matrix_ind][K / 3][K % 3] != 1 && res_M[matrix_ind / 3][matrix_ind % 3] != 0 && res_M[matrix_ind / 3][matrix_ind % 3] !=1)
+			{		
+				allowed_step = 2;
+				if(player == 1)	
 				{
 					std::cout << "X"; 
 				}
@@ -193,45 +193,82 @@ int main()
 				{	
 					Y = 11 + 11 * (K / 3) + (K / 3);
 
-					X=20 + 24 * (K % 3) ;
+					X = 20 + 24 * (K % 3) ;
 
-					printf("\033[%d;%dH", Y, X);
+					//printf("\033[%d;%dH", Y, X);
 
 					border_top = 1;
 					border_left = 1;
 					matrix_ind = K;
 					K = 4;
 				}
+				else
+				{
+					allowed_step = 8;
+					border_top = ((Y - 3) / 4) - 1;
+					border_left = ((X - 4) / 8) - 1;
+					
+				}
 			}
-			
-			
 			break;
 		case 83: case 115: //bottom    S
 			if(border_top != allowed_step){
 				Y += 4;
 				++border_top;
-				K += 3;	
+				if(K >= 6)
+				{
+					K -= 6;
+					matrix_ind += 3;
+				}
+				else
+				{
+					K += 3;
+				}
 			}
 			break;	
 		case 68: case 100: //right    D
 			if(border_left != allowed_step){
 				X += 8;
 				++border_left;
-				++K;
+				if((K + 1) % 3 == 0)
+				{
+					K -= 2;
+					++matrix_ind;
+				}
+				else
+				{
+					++K;
+				}
 			}
 			break;
 		case 87: case 119: //top    W
 			if(border_top != 0){
 				Y -= 4;
 				--border_top;
-				K -= 3;	
+				if(K <= 2)
+				{
+					K += 6;
+					matrix_ind -= 3;
+				}
+				else
+				{
+					K -= 3;
+				}
 			}
 			break;
 		case 65: case 97: //left    A
 			if(border_left != 0){
 				X -= 8;
 				--border_left;
-				--K;
+				if((K % 3) == 0)
+				{
+					K += 2;
+					--matrix_ind;
+				}
+				else
+				{
+					--K;
+				}
 			}
 			break;
 		case 'q':
