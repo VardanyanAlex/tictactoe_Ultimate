@@ -39,7 +39,7 @@ void normal()
 // pressed, or -1 for no key pressed
 int keypress()
 {
-   
+   fflush(stdout);
    /*static*/ char keypressed;
    struct timeval waittime;
    int num_chars_read;
@@ -47,8 +47,6 @@ int keypress()
    FD_SET(0, &mask);
    waittime.tv_sec = 0;
    waittime.tv_usec = 0;
-   //int X=12,Y=6;
-   //printf("\033[%d;%dH", Y, X);
    if (select (1, &mask, 0, 0, &waittime))
    {
       num_chars_read = read (0, &keypressed, 1);
