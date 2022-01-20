@@ -8,6 +8,6 @@ extern const size_t TERMINAL_SIZE_Y;
 /*
 * Brief: Prints game's(tic-tac-toe) title and players names
 */
-void gameTitle(std::string &xName, std::string &oName);
+void gameTitle(std::string &xName, std::string &oName, int &lvl);
 
 #endif // GAMETITLE_HPP
